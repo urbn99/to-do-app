@@ -1,0 +1,15 @@
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+$clr-1: #fff;
+$clr-2: #333;
+$clr-3: rgb(0, 163, 22);
+$clr-4: burlywood;
+$clr-5: #e7dfd5;
+
+
+$trans-1: all 0.5s ease-in-out;

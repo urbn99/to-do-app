@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect} from 'react'
+import InputSection from './components/InputSection'
+import TodosList from './components/TodosList'
 
-function App() {
+
+const App = () => {
+
+  const [inputValue, setInputValue] = useState('');
+  const [todosArray, setTodosArray] = useState([]);
+
+
+  //LocalStorage
+  useEffect(() => {
+
+    getLocalTodos();
+  }, [])
+
+  useEffect(() => {
+
+    saveLocalTodos();
+  }, [todosArray])
+
+
+  const saveLocalTodos = () => {
+
+    localStorage.setItem('todosArray', JSON.stringify(todosArray));
+  }
+
+  const getLocalTodos = () => {
+    if (localStorage.getItem('todosArray') === null) {
+      localStorage.setItem('todosArray', JSON.stringify([]));
+    } else {
+      let todoLocal = JSON.parse(localStorage.getItem('todosArray'));
+      setTodosArray(todoLocal)
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div className='container'>
+
+      <div className='sticky-nav'>
+
+        <header>To Do List</header>
+
+        <InputSection 
+          inputValue={inputValue} 
+          setInputValue={setInputValue}
+          todosArray={todosArray}
+          setTodosArray={setTodosArray}
+
+        />
+      </div>
+      
+      <TodosList
+        todosArray = {todosArray}
+        setTodosArray = {setTodosArray}
+      />
+      
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
